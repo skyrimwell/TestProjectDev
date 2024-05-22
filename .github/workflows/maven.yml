@@ -24,7 +24,7 @@ jobs:
     - name: Set up JDK
       uses: actions/setup-java@v3
       with:
-        java-version: '17'
+        java-version: '21'
         distribution: 'zulu'
         cache: maven
     - name: Build with Maven
@@ -34,4 +34,4 @@ jobs:
     name: Build and Analyze
     env:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      run: mvn -B verify org.sonarsource.scanner.maven:sonar-mavenplugin:sonar -Dsonar.projectKey=skyrimwell_TestProjectDev
+    run: mvn -B verify org.sonarsource.scanner.maven:sonar-mavenplugin:sonar -Dsonar.projectKey=skyrimwell_TestProjectDev

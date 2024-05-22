@@ -1,8 +1,10 @@
 language: java
 jdk:
-  - openjdk22
+  - openjdk17
 addons:
   sonarcloud:
-  organization: "skyrimwell"
+    organization: "skyrimwell"
+    token:
+      secure: ec3e9a1d083b683280673e19fc471f74aec19fef
 script:
   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=skyrimwell -Dsonar.login=${SONAR_TOKEN}

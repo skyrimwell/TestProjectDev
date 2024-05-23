@@ -34,8 +34,7 @@ jobs:
     name: Build and Analyze
     env:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      run: mvn -B verify org.sonarsource.scanner.maven:sonar-mavenplugin:sonar -Dsonar.projectKey=skyrimwell_TestProjectDev mvn clean deploy sonar:sonar -Pcoverage
-
+      run: mvn -B verify org.sonarsource.scanner.maven:sonar-mavenplugin:sonar -Dsonar.projectKey=skyrimwell_TestProjectDev
 
   Analysis:
     runs-on: ubuntu-latest
@@ -72,4 +71,4 @@ jobs:
             #-Dsonar.tests= # optional. For more info about Code Coverage, please refer to https://docs.sonarcloud.io/enriching/test-coverage/overview/
           # Adds more detail to both client and server-side analysis logs, activating DEBUG mode for the scanner, and adding client-side environment variables and system properties to the server-side log of analysis report processing.
           #-Dsonar.verbose= # optional, default is false
-
+          run: mvn clean install sonar:sonar -Pcoverage

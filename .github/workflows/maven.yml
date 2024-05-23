@@ -21,12 +21,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v3
     - name: Set up JDK
       uses: actions/setup-java@v3
       with:
-        java-version: '8'
-        distribution: 'temurin'
+        java-version: '17'
+        distribution: 'zulu'
         cache: maven
     - name: Build with Maven
       run: mvn -B package --file pom.xml
@@ -43,14 +43,14 @@ jobs:
         key: ${{ runner.os }}-sonar
         restore-keys: ${{ runner.os }}-sonar
     - name: Cache Maven packages
-      uses: actions/cache@v1
+      uses: actions/cache@v3
       with:
         path: ~/.m2
-        key: ${{ runner.os }}
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
     - name: Build and analyze SonarCloud
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      run: |
-        mvn verify -B verify sonar:sonar -Dsonar.projectKey=skyrimwell_TestProjectDev -Dsonar.organization=skyrimwell -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN 
+      run: | 
+        mvn -B verify org.sonarsource.scanner.maven:sonar-maven- plugin:sonar -Dsonar.projectKey=skyrimwell_TestProjectDev -Dsonar.organization=skyrimwell -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN

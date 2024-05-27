@@ -1,5 +1,9 @@
 package org.example.MoodAnalyzer;
 
+import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.ru.RussianAnalyzer;
+import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -30,17 +34,24 @@ public class MoodAnalyzer {
 
     public static int analyzeMood(String text) {
         int moodScore = 0;
+        RussianAnalyzer analyzer = new RussianAnalyzer();
+        TokenStream tokenStream = analyzer.tokenStream(null, text);
+        try (tokenStream) {
+            CharTermAttribute attr = tokenStream.addAttribute(CharTermAttribute.class);
+            tokenStream.reset();
 
-        StringTokenizer tokenizer = new StringTokenizer(text, " ,.!?;:\n");
-
-        while (tokenizer.hasMoreTokens()) {
-            String word = tokenizer.nextToken().toLowerCase();
-
-            if (POSITIVE_WORDS.contains(word)) {
-                moodScore++;
-            } else if (NEGATIVE_WORDS.contains(word)) {
-                moodScore--;
+            while (tokenStream.incrementToken()) {
+                String token = attr.toString();
+                if (POSITIVE_WORDS.contains(token)) {
+                    moodScore++;
+                } else if (NEGATIVE_WORDS.contains(token)) {
+                    moodScore--;
+                }
             }
+
+            tokenStream.end();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
         return moodScore;

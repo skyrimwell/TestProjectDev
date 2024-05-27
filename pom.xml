@@ -18,6 +18,14 @@
                 <artifactId>sonar-maven-plugin</artifactId>
                 <version>3.6.0.1398</version>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>9</source>
+                    <target>9</target>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
@@ -34,6 +42,16 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.alibaba.lindorm</groupId>
+            <artifactId>lucene-core</artifactId>
+            <version>8.10.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-analyzers-common</artifactId>
+            <version>8.11.1</version>
+        </dependency>
         <dependency>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>

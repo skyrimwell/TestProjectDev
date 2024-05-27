@@ -1,4 +1,4 @@
-package org.example;
+package org.example.Base;
 
 public class ball {
     private double x = 0.0;

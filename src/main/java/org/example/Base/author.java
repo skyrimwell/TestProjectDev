@@ -1,4 +1,4 @@
-package org.example;
+package org.example.Base;
 
 public class author {
     private String name;

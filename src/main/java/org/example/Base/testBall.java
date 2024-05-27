@@ -1,4 +1,4 @@
-package org.example;
+package org.example.Base;
 
 public class testBall {
     public static void main(String[] args) {

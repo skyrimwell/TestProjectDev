@@ -17,19 +17,19 @@ public class MoodAnalyzer {
     private static final Set<String> NEGATIVE_WORDS = new HashSet<>();
 
     static {
-        POSITIVE_WORDS.add("хороший");
-        POSITIVE_WORDS.add("прекрасный");
-        POSITIVE_WORDS.add("отличный");
-        POSITIVE_WORDS.add("замечательный");
-        POSITIVE_WORDS.add("радостный");
-        POSITIVE_WORDS.add("счастливый");
+        POSITIVE_WORDS.add("хорош");
+        POSITIVE_WORDS.add("прекрас");
+        POSITIVE_WORDS.add("отлич");
+        POSITIVE_WORDS.add("замечатель");
+        POSITIVE_WORDS.add("радост");
+        POSITIVE_WORDS.add("счастл");
 
-        NEGATIVE_WORDS.add("плохой");
-        NEGATIVE_WORDS.add("ужасный");
-        NEGATIVE_WORDS.add("отвратительный");
-        NEGATIVE_WORDS.add("грустный");
-        NEGATIVE_WORDS.add("несчастный");
-        NEGATIVE_WORDS.add("тревожный");
+        NEGATIVE_WORDS.add("плох");
+        NEGATIVE_WORDS.add("ужас");
+        NEGATIVE_WORDS.add("отвратитель");
+        NEGATIVE_WORDS.add("груст");
+        NEGATIVE_WORDS.add("несчаст");
+        NEGATIVE_WORDS.add("тревож");
     }
 
     public static int analyzeMood(String text) {
@@ -42,9 +42,9 @@ public class MoodAnalyzer {
 
             while (tokenStream.incrementToken()) {
                 String token = attr.toString();
-                if (POSITIVE_WORDS.contains(token)) {
+                if (POSITIVE_WORDS.stream().anyMatch(token::startsWith)) {
                     moodScore++;
-                } else if (NEGATIVE_WORDS.contains(token)) {
+                } else if (NEGATIVE_WORDS.stream().anyMatch(token::startsWith)) {
                     moodScore--;
                 }
             }

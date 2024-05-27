@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.StringTokenizer;
 
 public class MoodAnalyzer {
 
@@ -27,6 +28,24 @@ public class MoodAnalyzer {
         NEGATIVE_WORDS.add("тревожный");
     }
 
+    public static int analyzeMood(String text) {
+        int moodScore = 0;
+
+        StringTokenizer tokenizer = new StringTokenizer(text, " ,.!?;:\n");
+
+        while (tokenizer.hasMoreTokens()) {
+            String word = tokenizer.nextToken().toLowerCase();
+
+            if (POSITIVE_WORDS.contains(word)) {
+                moodScore++;
+            } else if (NEGATIVE_WORDS.contains(word)) {
+                moodScore--;
+            }
+        }
+
+        return moodScore;
+    }
+
     public static void main(String[] args) {
         String filePath = args[0];
         String content;
@@ -37,7 +56,7 @@ public class MoodAnalyzer {
             System.out.println("Не удалось прочитать файл: " + e.getMessage());
             return;
         }
-
-
+        int moodScore = analyzeMood(content);
+        System.out.println("Настроение текста: " + moodScore);
     }
 }

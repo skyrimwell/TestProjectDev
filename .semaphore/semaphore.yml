@@ -16,7 +16,13 @@ blocks:
             - checkout
             - sem-version java 11
             - mvn -B package --file pom.xml
-        - name: Analyze
+  - name: Analyze
+    task:
+      env_vars:
+        - name: MAVEN_OPTS
+          value: '-Dmaven.repo.local=.m2'
+      jobs:
+        - name: 'Job #1'
           commands:
             - checkout
             - cache restore

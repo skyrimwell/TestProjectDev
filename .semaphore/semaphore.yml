@@ -14,7 +14,7 @@ blocks:
         - name: Build
           commands:
             - checkout
-            - sem-version java 8
+            - sem-version java 17
             - mvn -B package --file pom.xml
   - name: Analyze
     task:

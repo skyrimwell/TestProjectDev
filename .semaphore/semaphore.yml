@@ -7,14 +7,18 @@ agent:
 blocks:
   - name: Maven
     task:
+      env_vars:
+        - name: MAVEN_OPTS
+          value: '-Dmaven.repo.local=.m2'
       jobs:
         - name: Build
           commands:
             - checkout
             - sem-version java 11
             - mvn -B package --file pom.xml
-after_pipeline:
-  task:
-    jobs:
-      - name: 'Job #1'
-        commands: []
+        - name: Analyze
+          commands:
+            - checkout
+            - cache restore
+            - 'mvn clean package sonar:sonar   -Dsonar.projectKey=skyrimwell_TestProjectDev -Dsonar.organization=skyrimwell -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN'
+            - cache store

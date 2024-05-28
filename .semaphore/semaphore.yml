@@ -13,12 +13,6 @@ blocks:
             - checkout
             - sem-version java 11
             - mvn -B package --file pom.xml
-  - name: 'Block #2'
-    task:
-      jobs:
-        - name: 'Job #1'
-          commands:
-            - 'mvn clean package sonar:sonar   -Dsonar.projectKey=skyrimwell_TestProjectDev -Dsonar.organization=skyrimwell -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN'
 after_pipeline:
   task:
     jobs:
